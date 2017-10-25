@@ -1,0 +1,100 @@
+{
+  "_from": "node-google-dfp-wrapper@1.3.1",
+  "_id": "node-google-dfp-wrapper@1.3.1",
+  "_inBundle": false,
+  "_integrity": "sha1-awdqk80mPQKkU8PfWGzvGi1aagg=",
+  "_location": "/node-google-dfp-wrapper",
+  "_phantomChildren": {
+    "asn1": "0.1.11",
+    "assert-plus": "0.1.5",
+    "bindings": "1.2.1",
+    "boom": "2.10.1",
+    "chalk": "1.1.3",
+    "commander": "2.11.0",
+    "core-util-is": "1.0.2",
+    "cryptiles": "2.0.5",
+    "ctype": "0.5.3",
+    "extend": "3.0.1",
+    "fast-future": "1.0.2",
+    "forever-agent": "0.6.1",
+    "gapitoken": "0.1.5",
+    "google-auth-library": "0.9.10",
+    "hoek": "2.16.3",
+    "inherits": "2.0.3",
+    "is-my-json-valid": "2.16.1",
+    "isstream": "0.1.2",
+    "json-stringify-safe": "5.0.1",
+    "level-errors": "1.0.5",
+    "level-iterator-stream": "1.3.1",
+    "node-uuid": "1.4.8",
+    "pinkie-promise": "2.0.1",
+    "prebuild-install": "2.3.0",
+    "process-nextick-args": "1.0.7",
+    "prr": "1.0.1",
+    "sntp": "1.0.9",
+    "string-template": "0.2.1",
+    "string_decoder": "0.10.31",
+    "stringstream": "0.0.5",
+    "tunnel-agent": "0.4.3",
+    "util-deprecate": "1.0.2",
+    "xtend": "4.0.1"
+  },
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "node-google-dfp-wrapper@1.3.1",
+    "name": "node-google-dfp-wrapper",
+    "escapedName": "node-google-dfp-wrapper",
+    "rawSpec": "1.3.1",
+    "saveSpec": null,
+    "fetchSpec": "1.3.1"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/node-google-dfp-wrapper/-/node-google-dfp-wrapper-1.3.1.tgz",
+  "_shasum": "6b076a93cd263d02a453c3df586cef1a2d5a6a08",
+  "_spec": "node-google-dfp-wrapper@1.3.1",
+  "_where": "/Users/pontusarmini/developer/dfp-line-item-gen",
+  "author": {
+    "name": "Juan Caicedo"
+  },
+  "bugs": {
+    "url": "https://github.com/spanishdict/node-google-dfp-wrapper/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "bluebird": "3.0.5",
+    "googleapis": "2.1.7",
+    "level": "1.6.0",
+    "lodash": "3.10.1",
+    "minimist": "1.2.0",
+    "moment": "2.10.6",
+    "node-google-dfp": "0.2.1"
+  },
+  "deprecated": false,
+  "description": "Simplifies and promisifies calls to node-google-dfp.",
+  "devDependencies": {
+    "chai": "3.4.1",
+    "chai-as-promised": "5.1.0",
+    "eslint": "1.9.0",
+    "mocha": "2.3.4",
+    "replay": "git://github.com/spanishdict/node-replay.git#f012552fe1b373bc74d59750307f0a2d17c91aa9"
+  },
+  "homepage": "https://github.com/spanishdict/node-google-dfp-wrapper",
+  "keywords": [
+    "dfp"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "node-google-dfp-wrapper",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spanishdict/node-google-dfp-wrapper.git"
+  },
+  "scripts": {
+    "lint": "eslint .; exit 0",
+    "test": "rm -rf local/*Store && mocha tests"
+  },
+  "version": "1.3.1"
+}

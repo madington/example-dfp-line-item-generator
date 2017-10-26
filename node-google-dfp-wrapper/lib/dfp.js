@@ -694,6 +694,27 @@ Dfp.prototype.getAdvertiser = function(conditions) {
     .then(extractFirstId);
 };
 
+
+/**
+ * @todo CUSTOM_BY_PONTUS
+ *
+ * @param  {Object} conditions Properties used for querying. This object can
+ *                             include any properties that are valid PQL filters
+ *                             in DFP.
+ * @return {String}            The id of the advertiser corresponding to the
+ *                             name passed in.
+ */
+Dfp.prototype.getAdvertiserByName = function(name) {
+  var service = 'CompanyService';
+  var method = 'getCompaniesByStatement';
+  var q = `Where name = '${name}'`;
+  var query = new nodeGoogleDfp.Statement(q);
+  console.log('getAdv query: ', query);
+  return this.dfpUser.executeAPIFunction(service, method, query)
+    .then(extractResults)
+    .then(extractFirstId);
+};
+
 /**
  * Gets the system assigned id of the label passed in.
  *
@@ -776,13 +797,13 @@ Dfp.prototype.prepareCreative = function(creative) {
  *                             in DFP.
  * @return {String}            The system assigned id of the passed in key.
  */
-Dfp.prototype.getCreativesForAdvertiserId = function(advertiserId) {
+Dfp.prototype.getCreativesForAdvertiserWithIdThatStartsWith = function(advertiserId, startsWith) {
   var ctx = this;
   var service = 'CreativeService';
   var method = 'getCreativesByStatement';
-  var queryString = `WHERE advertiserId = \'${advertiserId}\'`;
-  var query = new nodeGoogleDfp.Statement(query);//_makeQuery(conditions, CREATIVE_FIELDS);
-
+  var queryString = `WHERE advertiserId = ${advertiserId} and name LIKE \'${startsWith}%\'`;
+  var query = new nodeGoogleDfp.Statement(queryString);//_makeQuery(conditions, CREATIVE_FIELDS);
+  console.log('getCreativesQuery: ', query);
   return ctx.dfpUser.executeAPIFunction(service, method, query)
     .then(extractResults);
 };

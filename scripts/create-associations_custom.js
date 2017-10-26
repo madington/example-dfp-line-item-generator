@@ -39,9 +39,8 @@ var dfp = new Dfp(credentials, config, config.refreshToken);
 
 var sizes_tv2 = require('./sizes_tv2');
 
-var query = {
-  orderId: '2172099323'
-};
+// SET THE ORDER ID HERE
+
 
 var creatives;
 
@@ -55,23 +54,28 @@ var sizes = sizes_tv2.map((size)=>{
 
 //console.log(process.argv.slice(2).join(' '));
 //const id = '4463413328';
+var query = {
+  orderId: '2172772969'
+};
 /* Custom by Pontus */
-const getAdvertiserConditions = {
-  name: 'Prebid'
+const advertiserName = 'yo';
+const creativesThatStartsWith = 'gen_'
+/* Custom by Pontus */
+// Get the advertiser ID
+function getAdvertiserByName(name){
+  return dfp.getAdvertiserByName(name)
 }
 /* Custom by Pontus */
-function getAdvertiser(conditions){
-  dfp.getAdvertiser(conditions)
+function getCreatives(id){
+  console.log('Advertiser id: ', id);
+  return dfp.getCreativesForAdvertiserWithIdThatStartsWith(id, creativesThatStartsWith);
 }
 /* Custom by Pontus */
 function getCreativeIds(creatives){
   return creatives.map((creative)=>{
+    console.log(creative.name);
     return creative.id;
   })
-}
-/* Custom by Pontus */
-function getCreatives(id){
-  return dfp.getCreativesForAdvertiserId(id);
 }
 /* Custom by Pontus */
 function saveCreativeIds(creativeIds) {
@@ -108,7 +112,7 @@ function handleError(err) {
 }
 
 function splitBatches(lineItems) {
-  var batches = _.chunk(lineItems, 400);
+  var batches = _.chunk(lineItems, 100);
   progressBar = new ProgressBar('Progress [:bar] :percent :elapseds', {
     total: batches.length + 1
   });
@@ -131,7 +135,12 @@ function advanceProgress() {
 }
 
 function logFlattened(flattened){
-  console.log(flattened);
+  console.log('flattened length: ', flattened.length);
+  /*
+  flattened.forEach((item)=>{
+    console.log(item);
+  })
+  */
 }
 
 // this function is to help debugging
@@ -151,8 +160,8 @@ Bluebird.resolve(query)
   .catch(handleError);
   */
 
-Bluebird.resolve(getAdvertiserConditions)
-  .then(getAdvertiser)
+Bluebird.resolve(advertiserName)
+  .then(getAdvertiserByName)
   .then(getCreatives)
   .then(getCreativeIds)
   .then(saveCreativeIds)

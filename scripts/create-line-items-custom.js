@@ -36,10 +36,9 @@ var startInCents = argv.start;
 var endInCents = argv.end;
 
 var pricePoints = formatter.generatePricePoints(startInCents, endInCents);
-console.log('pricePoints: ', pricePoints);
 
 var CONCURRENCY = {
-  concurrency: 1
+  concurrency: 3
 };
 
 //console.log(orderName);
@@ -51,11 +50,11 @@ function getCombinations() {
   pricePoints.forEach(function(cpm) {
     var lineItem = formatter.formatLineItem({
       cpm: cpm,
-      orderName: 'Prebid ROS',
+      orderName: 'yo_first_order',
       customCriteriaKVPairs: {
         "hb_pb": (cpm.toString())
       },
-      date: "10-25-2017, 16:10:53",
+      date: "10-26-2017, 15:00:00",
       adUnitName: 'TV2no'
     });
     //console.log(lineItem);

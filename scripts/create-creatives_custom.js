@@ -48,7 +48,7 @@ var sizes = require('./sizes')(platform);
 var size = sizes[position];
 */
 var sizes = require('./sizes_tv2');
-var partner = 'Prebid';
+var partner = 'yo';
 var creatives;
 
 var CONCURRENCY = {
@@ -65,14 +65,14 @@ function getCombinations() {
     var creative = formatter.formatCreative({
       size: size,
       partner: partner,
-      customName: 'testing_testing'
+      customName: 'gen'
     });
 
     combinations.push(creative);
 
   });
 
-  progressBar = new ProgressBar('Progress [:bar] :percent :elapseds', {
+  progressBar = new ProgressBar('Progress [:bar] :percent :elapsed', {
     total: combinations.length + 1
   });
 

@@ -81,6 +81,7 @@ function editAssociation(_association) {
   var clone = _.cloneDeep(defaultAssociation);
   var association = _.assign(clone, _association);
   //mutate association however you need to
+  console.log(association);
   return association;
 }
 function updateAssociations(associations) {
@@ -124,7 +125,7 @@ Bluebird.resolve(getQuery())
   .then(getAssociations)
   .filter(includeAssociation)
   .map(editAssociation)
-  .then(splitBatches)
-  .map(updateAssociations, CONCURRENCY)
+//  .then(splitBatches)
+//  .map(updateAssociations, CONCURRENCY)
   .then(logSuccess)
   .catch(handleError);

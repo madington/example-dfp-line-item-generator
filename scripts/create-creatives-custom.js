@@ -6,7 +6,7 @@
  *
  * Usage:
  *
- *   $ node scripts/create-creatives.js --channel A --platform M --position MIDDLE --region USA --partner SONOBI
+ *   $ node scripts/create-creatives.js --advertiser Prebid
  *
  */
 /*eslint-enable */
@@ -33,11 +33,11 @@ var credentials = {
 var dfp = new Dfp(credentials, config, config.refreshToken);
 
 // read command line arguments
+var advertiser = argv.advertiser;
 /*
 var channel = argv.channel;
 var region = argv.region;
 var position = argv.position;
-var partner = argv.partner;
 var platform = argv.platform;
 */
 
@@ -47,8 +47,14 @@ var platform = argv.platform;
 var sizes = require('./sizes')(platform);
 var size = sizes[position];
 */
-var sizes = require('./sizes_tv2');
-var partner = 'yo';
+//var sizes = require('./sizes_tv2');
+var sizes = [
+  '_1',
+  '_2',
+  '_3',
+  '_4',
+  '_5'
+]
 var creatives;
 
 var CONCURRENCY = {
@@ -63,9 +69,9 @@ function getCombinations() {
   _.forEach(sizes, function(size) {
 
     var creative = formatter.formatCreative({
-      size: size,
-      partner: partner,
-      customName: 'gen'
+      size: '1x1',
+      advertiser: advertiser,
+      customName: 'autogen'+size
     });
 
     combinations.push(creative);
@@ -92,6 +98,10 @@ function logSuccess(results) {
   if (results) {
     advanceProgress();
     console.log('sucessfully created creatives');
+    console.log('Use this ids to make associations');
+    console.log(results.map(function (item) {
+      return item.id;
+    }));
   }
 }
 

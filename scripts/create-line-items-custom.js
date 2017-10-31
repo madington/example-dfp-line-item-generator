@@ -5,7 +5,7 @@
  *
  * Usage:
  *
- *   $ node scripts/create-line-items.js --order ORDER_NAME --start 1 --end 1
+ *   $ node scripts/create-line-items.js --order ORDER_ID --start 1 --end 1
  *
  */
 /*eslint-enable */
@@ -14,7 +14,7 @@
 var Bluebird = require('bluebird');
 var ProgressBar = require('progress');
 var progressBar;
-
+var moment = require('moment');
 var argv = require('minimist')(process.argv.slice(2));
 
 var DFP_CREDS = require('../local/application-creds');
@@ -31,7 +31,8 @@ var credentials = {
 
 var dfp = new Dfp(credentials, config, config.refreshToken);
 
-//var orderName = argv.order;
+//var orderName = argv.ordername;
+var orderId = argv.order;
 var startInCents = argv.start;
 var endInCents = argv.end;
 
@@ -50,14 +51,15 @@ function getCombinations() {
   pricePoints.forEach(function(cpm) {
     var lineItem = formatter.formatLineItem({
       cpm: cpm,
-      orderName: 'yo_first_order',
+      //orderName: orderName,
+      orderId: orderId,
       customCriteriaKVPairs: {
         "hb_pb": (cpm.toString())
       },
-      date: "10-26-2017, 15:00:00",
+      date: moment().add('15', 'm').format('MM-DD-YYYY, H:mm:ss'),
       adUnitName: 'TV2no'
     });
-    //console.log(lineItem);
+
     combinations.push(lineItem);
   });
 

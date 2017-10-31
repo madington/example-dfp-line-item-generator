@@ -1,11 +1,11 @@
 /*eslint-disable */
 /**
  *
- * This script creates a new order tied to the partner you specify.
+ * This script creates a new order tied to the advertiser you specify.
  *
  * Usage:
  *
- *   $ node scripts/create-order.js --partner PREBID --offset 1
+ *   $ node scripts/create-order.js --advertiser Prebid --name ros
  *
  */
 /*eslint-enable */
@@ -28,8 +28,7 @@ var credentials = {
 
 var dfp = new Dfp(credentials, config, config.refreshToken);
 
-var partner = 'yo' //argv.partner;
-var offset = argv.offset;
+var advertiser = argv.advertiser;
 
 // This is the id of a DFP user that will be listed as trafficker.
 var traffickerId = '244654568';
@@ -37,18 +36,18 @@ var traffickerId = '244654568';
 // Examples: PREBID_O_00001, PREBID_O_00401
 /*
 var name = [
-  partner,
+  advertiser,
   'O',
   formatter.pad(offset, 5)
 ].join('_').toUpperCase();
 */
-var name = `${partner}_first_order`;
+var name = `${advertiser}_${argv.name}`;
 
 // Print out arguments so we can know which script is executing
 console.log(process.argv.slice(2).join(' '));
 
 function formatOrder() {
-  var order = formatter.formatOrder(name, traffickerId, partner);
+  var order = formatter.formatOrder(name, traffickerId, advertiser);
   return order;
 }
 
@@ -62,7 +61,7 @@ function createOrder(order) {
 
 function logSuccess(results) {
   if (results) {
-    console.log('successfully created order');
+    console.log('successfully created order', results.id, results.name);
   }
 }
 

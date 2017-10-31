@@ -8,7 +8,7 @@
  *
  * Usage:
  *
- *   $ node scripts/create-associations.js --partner PREBID
+ *   $ node scripts/create-associations.js --order 12345
  *
  */
 /*eslint-enable */
@@ -39,10 +39,32 @@ var dfp = new Dfp(credentials, config, config.refreshToken);
 
 var sizes_tv2 = require('./sizes_tv2');
 
-// SET THE ORDER ID HERE
-
-
-var creatives;
+// SET THE CREATIVES ID
+var creatives = [ '138215230250',
+  '138215230253',
+  '138215233326',
+  '138215233329',
+  '138215233332',
+  '138215230256',
+  '138215230259',
+  '138215233335',
+  '138215233338',
+  '138215230265',
+  '138215229017',
+  '138215230268',
+  '138215230274',
+  '138215230277',
+  '138215233341',
+  '138215230280',
+  '138215230283',
+  '138215230289',
+  '138215233353',
+  '138215230298',
+  '138215230301',
+  '138215230304',
+  '138215233365',
+  '138215229023',
+  '138215233368' ];
 
 var sizes = sizes_tv2.map((size)=>{
   return {
@@ -55,10 +77,10 @@ var sizes = sizes_tv2.map((size)=>{
 //console.log(process.argv.slice(2).join(' '));
 //const id = '4463413328';
 var query = {
-  orderId: '2172772969'
+  orderId: argv.order
 };
 /* Custom by Pontus */
-const advertiserName = 'yo';
+const conditions = { };
 const creativesThatStartsWith = 'gen_'
 /* Custom by Pontus */
 // Get the advertiser ID
@@ -88,17 +110,17 @@ function getLineItems(query){
 }
 */
 /* Custom by Pontus */
-function getLineItems(){
+function getLineItems(query){
   return dfp.getLineItems(query);
 }
 
 function prepareAssociations(lineItems) {
+
   var associations  = lineItems.map(function(lineItem) {
     return creatives.map(function(creativeId){
       return {
         lineItemId: lineItem.id,
-        creativeId: creativeId,
-        sizes: sizes
+        creativeId: creativeId
       };
     });
   });
@@ -112,21 +134,23 @@ function handleError(err) {
 }
 
 function splitBatches(lineItems) {
-  var batches = _.chunk(lineItems, 100);
+  var batches = _.chunk(lineItems, 50);
   progressBar = new ProgressBar('Progress [:bar] :percent :elapseds', {
     total: batches.length + 1
   });
   return batches;
 }
 
-function createAssociations(associations) {
-  return dfp.createAssociations(associations)
-    .tap(advanceProgress);
+function deleteAssociations(associations) {
+  console.log("Now deleteAssociations");
+  return dfp.deleteAssociations(associations)
+    .tap(advanceProgress)
+    .delay(500);
 }
 
 function logSuccess(results) {
   if (results) {
-    console.log('sucessfully created associations', results);
+    console.log('sucessfully deleted associations', results);
   }
 }
 
@@ -149,22 +173,22 @@ function log(x){
   console.log(x);
 }
 /*eslint-enable */
-/*
+
 Bluebird.resolve(query)
   .then(getLineItems)
   .then(prepareAssociations)
   .then(_.flatten)
   .then(splitBatches)
-  .map(createAssociations, CONCURRENCY)
+  .each(deleteAssociations)
   .then(logSuccess)
   .catch(handleError);
-  */
 
-Bluebird.resolve(advertiserName)
-  .then(getAdvertiserByName)
-  .then(getCreatives)
-  .then(getCreativeIds)
-  .then(saveCreativeIds)
+/*
+Bluebird.resolve(query)
+  //.then(getAdvertiserByName)
+  //.then(getCreatives)
+  //.then(getCreativeIds)
+  //.then(saveCreativeIds)
   .then(getLineItems)
   .then(prepareAssociations)
   .then(_.flatten)
@@ -172,3 +196,4 @@ Bluebird.resolve(advertiserName)
   .map(createAssociations, CONCURRENCY)
   .then(logSuccess)
   .catch(handleError);
+*/
